@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -143,19 +145,21 @@ public class ProdottoDao implements ProdottoDaoInterfaccia{
 		}
 		return (result != 0);
 	}
-
+	
 	@Override
 	public synchronized ArrayList<ProdottoBean> doRetrieveAll(String order) throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+	    Connection connection = null;
+	    PreparedStatement preparedStatement = null;
 
-		ArrayList<ProdottoBean> products = new ArrayList<ProdottoBean>();
+	    ArrayList<ProdottoBean> products = new ArrayList<ProdottoBean>();
 
-		String selectSQL = "SELECT * FROM " + ProdottoDao.TABLE_NAME;
+	    String selectSQL = "SELECT * FROM " + ProdottoDao.TABLE_NAME;
 
-		if (order != null && !order.equals("")) {
-			selectSQL += " ORDER BY " + order;
-		}
+	    List<String> validColumns = Arrays.asList("NOME", "PIATTAFORMA", "DESCRIZIONE", "PREZZO", "QUANTITA", "GENERE", "DATA_USCITA", "IN_VENDITA", "IVA", "IMMAGINE", "DESCRIZIONE_DETTAGLIATA");
+
+	    if (order != null && !order.equals("") && validColumns.contains(order.toUpperCase())) {
+	        selectSQL += " ORDER BY " + order;
+	    }
 
 		try {
 			connection = ds.getConnection();
