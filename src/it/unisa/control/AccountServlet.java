@@ -29,10 +29,16 @@ public class AccountServlet extends HttpServlet {
 		doPost(request, response);
 	}
 
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String redirectedPage = request.getParameter("page");
+		
+	    if (redirectedPage != null) {
+	        if (redirectedPage.equals("META-INF/context.xml") || redirectedPage.equals("WEB-INF/web.xml")) {
+	            redirectedPage = "Home.jsp"; 
+	        }
+	    }
 		
 		UserDao daoUser = new UserDao();
 		UserBean user = (UserBean) request.getSession().getAttribute("currentSessionUser");
