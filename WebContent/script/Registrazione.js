@@ -38,11 +38,11 @@ function checkUserName(inputtxt) {
 
 
 function checkPassword(inputtxt) {
-	var password = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-	if(inputtxt.value.match(password)) 
-		return true;
-	
-	return false;	
+    var password = /^[A-Za-z0-9]{8,}$/;
+    if(inputtxt.value.match(password)) 
+        return true;
+    
+    return false;	
 }
 
 
